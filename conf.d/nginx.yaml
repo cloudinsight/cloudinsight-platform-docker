@@ -1,0 +1,7 @@
+init_config:
+
+instances:
+  - nginx_status_url: http://nginx:80/nginx_status/
+    tags:
+      - role:proxyserver
+      - service:nginx

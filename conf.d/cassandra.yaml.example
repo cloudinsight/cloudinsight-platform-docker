@@ -1,0 +1,73 @@
+instances:
+  - host: cassandra
+    port: 7199
+    user: monitorRole  # this with jmx api perission readonly
+    # user: controlRole  # with jmx api permission readwrite etc.
+    password: cassandra
+  #   process_name_regex: .*process_name.* # Instead of specifying a host, and port. The agent can connect using the attach api.
+  #                                        # This requires the JDK to be installed and the path to tools.jar to be set below.
+  #   tools_jar_path: /usr/lib/jvm/java-7-openjdk-amd64/lib/tools.jar # To be set when process_name_regex is set
+    name: cassandra_demo
+  #   # java_bin_path: /path/to/java # Optional, should be set if the agent cannot find your java executable
+  #   # java_options: "-Xmx200m -Xms50m" # Optional, Java JVM options
+  #   # trust_store_path: /path/to/trustStore.jks # Optional, should be set if ssl is enabled
+  #   # trust_store_password: password
+    tags:
+      role: storage
+      service: cassandra
+
+init_config:
+  # List of metrics to be collected by the integration
+  conf:
+    - include:
+        domain: org.apache.cassandra.db
+        attribute:
+          - BloomFilterDiskSpaceUsed
+          - BloomFilterFalsePositives
+          - BloomFilterFalseRatio
+          - Capacity
+          - CompletedTasks
+          - CompressionRatio
+          - ExceptionCount
+          - Hits
+          - KeyCacheRecentHitRate
+          - LiveDiskSpaceUsed
+          - LiveSSTableCount
+          - Load
+          - MaxRowSize
+          - MeanRowSize
+          - MemtableColumnsCount
+          - MemtableDataSize
+          - MemtableSwitchCount
+          - MinRowSize
+          - PendingTasks
+          - RangeOperations
+          - ReadCount
+          - ReadOperations
+          - RecentHitRate
+          - RecentRangeLatencyMicros
+          - RecentReadLatencyMicros
+          - RecentWriteLatencyMicros
+          - Requests
+          - RowCacheRecentHitRate
+          - Size
+          - TotalDiskSpaceUsed
+          - TotalRangeLatencyMicros
+          - TotalReadLatencyMicros
+          - TotalWriteLatencyMicros
+          - UpdateInterval
+          - WriteCount
+          - WriteOperations
+      exclude:
+        keyspace: system
+    - include:
+        domain: org.apache.cassandra.internal
+        attribute:
+          - ActiveCount
+          - CompletedTasks
+          - CurrentlyBlockedTasks
+          - TotalBlockedTasks
+    - include:
+        domain: org.apache.cassandra.net
+        attribute:
+          - TotalTimeouts

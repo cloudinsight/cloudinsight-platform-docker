@@ -1,0 +1,11 @@
+init_config:
+
+instances:
+  - server: http://couchbase:8091
+    user: Administrator
+    # you need to set in the setup page
+    password: myawsomecouchbasepw
+    # timeout: 10 # Optional timeout to http connections to the API
+    tags:
+      - role:database
+      - service:couchbase

@@ -1,0 +1,13 @@
+init_config:
+#  Customize the ZooKeeper connection timeout here
+#  zk_timeout: 5
+#  Customize the Kafka connection timeout here
+#  kafka_timeout: 5
+
+instances:
+   - kafka_connect_str: kafka:9092
+     zk_connect_str: zookeeper:2181
+  #   zk_prefix: /0.8
+     consumer_groups:
+       my_consumer:
+         foo: [0, 1]

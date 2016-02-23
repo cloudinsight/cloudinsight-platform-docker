@@ -1,0 +1,9 @@
+init_config:
+
+instances:
+  - apache_status_url: http://apache/server-status?auto
+    # apache_user: example_user
+    # apache_password: example_password
+    tags:
+      - role:webserver
+      - service:httpd

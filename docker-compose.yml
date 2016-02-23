@@ -1,0 +1,204 @@
+#demo:
+#  to demo how to ignore a serice
+  
+nginx:   #image size: 130+M
+  build: ./nginx
+  # If you need access from host, uncomment below section
+  ports:
+    - "80:80"
+  links:
+    - php_fpm
+
+php_fpm:   # image size: 450+M
+ build: ./php_fpm
+ # If you need access from host, uncomment below section
+ #ports:
+ #  - "9000:9000"
+  
+redis:   #image size: 100+M
+  image: redis:3
+  # If you need access from host, uncomment below section
+  #ports:
+  #  - "6379:6379"
+  
+mongo:    #image size: 260+M
+  image: tutum/mongodb:3.0
+  environment: 
+    - MONGODB_PASS=myawsomemongopw
+  # If you need access from host, uncomment below section
+  #ports:
+  #  - "27017:27017"
+
+apache:   #image size: 190+M
+  build: ./apache
+  # If you need access from host, uncomment below section
+  #ports:
+  #  - "80:80"
+  
+mysql:    #image size: 350+M
+  image: mysql:5.7
+  environment: 
+    - MYSQL_ROOT_PASSWORD=myawsomerootpw
+  # If you need access from host, uncomment below section
+  #ports:
+  #  - "3306:3306"
+tomcat:     #image size: 350+M
+  build: ./tomcat
+  # If you need access from host, uncomment below section
+  ports:
+    - "8080:8080"  # server port
+    #- "7199:7199"  # jmx port
+
+#mcache:    #image size: 130+M
+#  image: memcached:1.4
+#  # If you need access from host, uncomment below section
+#  #ports:
+#  #  - "11211:11211"
+#
+#postgres:    #image size: 260+M
+#  image: postgres:9
+#  environment: 
+#    - POSTGRES_PASSWORD=myawsomepostgrespw
+#  # If you need access from host, uncomment below section
+#  #ports:
+#  #  - "5432:5432"
+#  
+#couchbase:    #image size: 370+M
+#  image: couchbase:4.0.0
+#  # you need to set passwd(already set in conf.d/couchbase.yaml) in the couchbase web page 
+#  # If you need access from host, uncomment below section
+#  ports:
+#    - "8091:8091"
+#  
+#couchdb:    #image size: 530+M
+#  image: frodenas/couchdb:1.6
+#  environment:
+#    - COUCHDB_USERNAME=couchdb
+#    - COUCHDB_PASSWORD=myawsomecouchdbpw
+#  # If you need access from host, uncomment below section
+#  #ports:
+#  #  - "5984:5984"
+#  
+#solr:    #image size: 560+M
+#  build: ./solr  # set ENABLE_REMOTE_JMX_OPTS=true
+#  # If you need access from host, uncomment below section
+#  ports:
+#    - "8983:8983"   # solr port
+#    #- "18983:18983"   # jmx port
+#
+#activemq:    #images size: 540+M
+#  build: ./activemq # set jmx options
+#  # If you need access from host, uncomment below section
+#  ports:
+#    - "8161:8161"  # activemq port
+#    #- "7199:7199"  # jmx port
+# 
+#elasticsearch:    #image size: 340+M
+#  image: elasticsearch:2.1
+#  # If you need access from host, uncomment below section
+#  ports:
+#    - "9200:9200"
+#    - "9300:9300"
+#
+#zookeeper:    # image size: 450+M
+#   image: wurstmeister/zookeeper
+#   ports:
+#     - "2181:2181"
+#
+#kafka:    # image size: 470+M
+#   build: ./kafka
+#   ports:
+#     - "9092:9092"   # server port
+#     #- "9999:9999"   # jmx port
+#   links:
+#     - zookeeper:zk
+#   environment:
+#     - JMX_PORT=9999
+#     - KAFKA_ADVERTISED_HOST_NAME=10.128.17.30  # set to your docker host ip
+#   volumes:
+#     - /var/run/docker.sock:/var/run/docker.sock
+#  
+#cassandra:    # image size: 370+M
+#  build: ./cassandra
+#  # If you need access from host, uncomment below section
+#  ports:
+#    - "7000:7000"   # server port
+#    #- "7199:7199"   # jmx port
+#  environment:
+#    - LOCAL_JMX=no
+#
+#rabbitmq:     # image size: 300+M
+#  image: rabbitmq:3.5-management 
+#  # If you need access from host, uncomment below section
+#  ports:
+#    - "15672:15672"   # management port
+#
+#mesos_master:    # image size: 330+M
+#  image: mesoscloud/mesos-master:0.24.1-centos-7
+#  environment:
+#    - MESOS_ZK=zk://zookeeper:2181/mesos
+#    - MESOS_QUORUM=1
+#  restart: always
+#  links:
+#    - zookeeper
+#
+#mesos_slave:    # image size: 410+M
+#  image: mesoscloud/mesos-slave:0.24.1-centos-7
+#  environment:
+#    - MESOS_MASTER=zk://zookeeper:2181/mesos
+#  volumes:
+#    - /sys/fs/cgroup:/sys/fs/cgroup
+#    - /var/run/docker.sock:/var/run/docker.sock   
+#  restart: always
+#  privileged: true
+#  links:
+#    - zookeeper
+#
+web:
+  # demo redis service.
+  build: ./web
+  links:
+    - redis
+  ports:
+    - "5001:5000"
+
+oneapm:
+  build: ./oneapm
+  hostname: $HOSTNAME
+  environment:
+    #- CI_URL: default_OneAPM_ci_collector 
+    - LICENSE_KEY=your-license-key
+    - TAGS=oneapm-ci-agent-docker-test, foo
+    - LOG_LEVEL=INFO  # CRITICAL, ERROR, WARNING, INFO, DEBUG
+    #- PROXY_HOST=
+    #- PROXY_PORT=
+    #- PROXY_USER=
+    #- PROXY_PASSWORD=
+  volumes: 
+    - /etc/localtime:/etc/localtime:ro
+    - ./conf.d:/conf.d:ro
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /proc/:/host/proc/:ro
+    - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+  links:
+    # Service you want to monitor.
+    #- demo        comment the service you don't want.
+    - redis
+    - nginx
+    - mongo
+    - mysql
+    - apache
+    - tomcat
+    #- mcache
+    #- postgres
+    #- couchbase
+    #- couchdb
+    #- activemq
+    #- solr
+    #- elasticsearch
+    #- kafka
+    #- cassandra
+    #- rabbitmq
+    #- zookeeper
+    #- mesos_master
+    #- mesos_slave
