@@ -166,7 +166,7 @@ oneapm:
   build: ./oneapm
   hostname: $HOSTNAME
   environment:
-    #- CI_URL: default_OneAPM_ci_collector 
+    #- CI_URL=default_OneAPM_ci_collector 
     - LICENSE_KEY=your-license-key
     - TAGS=oneapm-ci-agent-docker-test, foo
     - LOG_LEVEL=INFO  # CRITICAL, ERROR, WARNING, INFO, DEBUG
