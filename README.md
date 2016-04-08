@@ -24,3 +24,9 @@ and visit oneapm.com ci page.
 * Kafka need topics.
 * Mesos slave cluster error.
 * Kafka cannot auto create topics when set JMX_PORT environment because JMX_PORT will be used to create another broker,  but JMX_PORT is used.
+* Official package source could be unreliable, let's say you're in China, you better add those to the oneapm/Dockerfile very after the RUN command:
+    ```
+    echo "deb http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse\ndeb http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse\n deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse\n deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse\n deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse\n deb-src http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse\n deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse\n deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse\n deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse\n deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse" > /etc/apt/sources.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 40976EAF437D05B5 && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 && \
+    ```
