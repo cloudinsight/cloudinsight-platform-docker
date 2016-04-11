@@ -1,29 +1,29 @@
 #demo:
-#  to demo how to ignore a serice
-  
-nginx:   #image size: 130+M
+#  to demo how to ignore a service
+
+nginx:   #image size: 60+M
   build: ./nginx
   # If you need access from host, uncomment below section
   ports:
     - "80:80"
-  links:
-    - php_fpm
+  #links:
+  #  - phpfpm
 
-php_fpm:   # image size: 450+M
- build: ./php_fpm
- # If you need access from host, uncomment below section
- #ports:
- #  - "9000:9000"
-  
-redis:   #image size: 100+M
-  image: redis:3
+#phpfpm:   # image size: 390+M
+#  build: ./php_fpm
+#  # If you need access from host, uncomment below section
+#  #ports:
+#  #  - "9000:9000"
+
+redis:   #image size: 15+M
+  image: redis:3-alpine
   # If you need access from host, uncomment below section
   #ports:
   #  - "6379:6379"
-  
-mongo:    #image size: 260+M
-  image: tutum/mongodb:3.0
-  environment: 
+
+mongo:    #image size: 79+M
+  image: mvertes/alpine-mongo:3.0.6
+  environment:
     - MONGODB_PASS=myawsomemongopw
   # If you need access from host, uncomment below section
   #ports:
@@ -34,42 +34,43 @@ apache:   #image size: 190+M
   # If you need access from host, uncomment below section
   #ports:
   #  - "80:80"
-  
-mysql:    #image size: 350+M
-  image: mysql:5.7
-  environment: 
+
+mysql:    #image size: 35+M
+  build: ./mysql
+  environment:
     - MYSQL_ROOT_PASSWORD=myawsomerootpw
   # If you need access from host, uncomment below section
   #ports:
   #  - "3306:3306"
-tomcat:     #image size: 350+M
+
+tomcat:     #image size: 180+M
   build: ./tomcat
   # If you need access from host, uncomment below section
   ports:
     - "8080:8080"  # server port
     #- "7199:7199"  # jmx port
 
-#mcache:    #image size: 130+M
-#  image: memcached:1.4
+# mcache:    #image size: 7M
+#  build: ./memcached
 #  # If you need access from host, uncomment below section
 #  #ports:
 #  #  - "11211:11211"
 #
 #postgres:    #image size: 260+M
-#  image: postgres:9
-#  environment: 
+#  build: ./postgres
+#  environment:
 #    - POSTGRES_PASSWORD=myawsomepostgrespw
 #  # If you need access from host, uncomment below section
 #  #ports:
 #  #  - "5432:5432"
-#  
+#
 #couchbase:    #image size: 370+M
-#  image: couchbase:4.0.0
-#  # you need to set passwd(already set in conf.d/couchbase.yaml) in the couchbase web page 
+#  build: ./couchbase
+#  # you need to set passwd(already set in conf.d/couchbase.yaml) in the couchbase web page
 #  # If you need access from host, uncomment below section
 #  ports:
 #    - "8091:8091"
-#  
+#
 #couchdb:    #image size: 530+M
 #  image: frodenas/couchdb:1.6
 #  environment:
@@ -78,7 +79,7 @@ tomcat:     #image size: 350+M
 #  # If you need access from host, uncomment below section
 #  #ports:
 #  #  - "5984:5984"
-#  
+#
 #solr:    #image size: 560+M
 #  build: ./solr  # set ENABLE_REMOTE_JMX_OPTS=true
 #  # If you need access from host, uncomment below section
@@ -92,7 +93,7 @@ tomcat:     #image size: 350+M
 #  ports:
 #    - "8161:8161"  # activemq port
 #    #- "7199:7199"  # jmx port
-# 
+#
 #elasticsearch:    #image size: 340+M
 #  image: elasticsearch:2.1
 #  # If you need access from host, uncomment below section
@@ -117,7 +118,7 @@ tomcat:     #image size: 350+M
 #     - KAFKA_ADVERTISED_HOST_NAME=10.128.17.30  # set to your docker host ip
 #   volumes:
 #     - /var/run/docker.sock:/var/run/docker.sock
-#  
+#
 #cassandra:    # image size: 370+M
 #  build: ./cassandra
 #  # If you need access from host, uncomment below section
@@ -128,7 +129,7 @@ tomcat:     #image size: 350+M
 #    - LOCAL_JMX=no
 #
 #rabbitmq:     # image size: 300+M
-#  image: rabbitmq:3.5-management 
+#  image: rabbitmq:3.5-management
 #  # If you need access from host, uncomment below section
 #  ports:
 #    - "15672:15672"   # management port
@@ -148,25 +149,25 @@ tomcat:     #image size: 350+M
 #    - MESOS_MASTER=zk://zookeeper:2181/mesos
 #  volumes:
 #    - /sys/fs/cgroup:/sys/fs/cgroup
-#    - /var/run/docker.sock:/var/run/docker.sock   
+#    - /var/run/docker.sock:/var/run/docker.sock
 #  restart: always
 #  privileged: true
 #  links:
 #    - zookeeper
 #
-web:
-  # demo redis service.
-  build: ./web
-  links:
-    - redis
-  ports:
-    - "5001:5000"
+#web:
+#  # demo redis service.
+#  build: ./web
+#  links:
+#    - redis
+#  ports:
+#    - "5001:5000"
 
 oneapm:
   build: ./oneapm
   hostname: $HOSTNAME
   environment:
-    #- CI_URL=default_OneAPM_ci_collector 
+    #- CI_URL=default_OneAPM_ci_collector
     - LICENSE_KEY=your-license-key
     - TAGS=oneapm-ci-agent-docker-test, foo
     - LOG_LEVEL=INFO  # CRITICAL, ERROR, WARNING, INFO, DEBUG
@@ -174,7 +175,7 @@ oneapm:
     #- PROXY_PORT=
     #- PROXY_USER=
     #- PROXY_PASSWORD=
-  volumes: 
+  volumes:
     - /etc/localtime:/etc/localtime:ro
     - ./conf.d:/conf.d:ro
     - /var/run/docker.sock:/var/run/docker.sock
@@ -189,6 +190,7 @@ oneapm:
     - mysql
     - apache
     - tomcat
+    #- phpfpm
     #- mcache
     #- postgres
     #- couchbase
