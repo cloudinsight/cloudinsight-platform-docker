@@ -1,3 +1,3 @@
-FROM tomcat:8.0
+FROM jeanblanchard/tomcat:8
 
-COPY setenv.sh /usr/local/tomcat/bin/setenv.sh
+COPY setenv.sh /opt/tomcat/bin/setenv.sh
