@@ -22,8 +22,8 @@ instances:
 
     # Check the length of these keys
     #
-    keys:
-       - hits
+    # keys:
+    #    - hits
 
     # Display a warning in the info page if the keys we're tracking are missing
     # Default: True

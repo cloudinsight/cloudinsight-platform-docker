@@ -1,30 +1,30 @@
 #demo:
 #  to demo how to ignore a service
 
-nginx:   #image size: 60+M
+nginx:   #image size: 60M
   build: ./nginx
   # If you need access from host, uncomment below section
-  ports:
-    - "80:80"
-  #links:
-  #  - phpfpm
+  # ports:
+  #   - "80:80"
+  links:
+    - phpfpm
 
-#phpfpm:   # image size: 390+M
-#  build: ./php_fpm
-#  # If you need access from host, uncomment below section
-#  #ports:
-#  #  - "9000:9000"
+phpfpm:   # image size: 390+M
+  build: ./php_fpm
+  # If you need access from host, uncomment below section
+  #ports:
+  #  - "9000:9000"
 
-redis:   #image size: 15+M
+redis:   #image size: 15M
   image: redis:3-alpine
   # If you need access from host, uncomment below section
   #ports:
   #  - "6379:6379"
 
-mongo:    #image size: 79+M
+mongo:    #image size: 79M
   image: mvertes/alpine-mongo:3.0.6
-  environment:
-    - MONGODB_PASS=myawsomemongopw
+  #environment:
+  #  - MONGODB_PASS=myawsomemongopw
   # If you need access from host, uncomment below section
   #ports:
   #  - "27017:27017"
@@ -35,8 +35,8 @@ apache:   #image size: 190+M
   #ports:
   #  - "80:80"
 
-mysql:    #image size: 35+M
-  build: ./mysql
+mysql:    #image size: 350+M
+  image: mysql:5.7
   environment:
     - MYSQL_ROOT_PASSWORD=myawsomerootpw
   # If you need access from host, uncomment below section
@@ -46,17 +46,17 @@ mysql:    #image size: 35+M
 tomcat:     #image size: 180+M
   build: ./tomcat
   # If you need access from host, uncomment below section
-  ports:
-    - "8080:8080"  # server port
-    #- "7199:7199"  # jmx port
+  # ports:
+  #   - "8080:8080"  # server port
+  #   #- "7199:7199"  # jmx port
 
-# mcache:    #image size: 7M
-#  build: ./memcached
+#mcache:    #image size: 130+M
+#  image: memcached:1.4
 #  # If you need access from host, uncomment below section
 #  #ports:
 #  #  - "11211:11211"
 #
-#postgres:    #image size: 260+M
+#postgres:    #image size: 27M
 #  build: ./postgres
 #  environment:
 #    - POSTGRES_PASSWORD=myawsomepostgrespw
@@ -101,23 +101,23 @@ tomcat:     #image size: 180+M
 #    - "9200:9200"
 #    - "9300:9300"
 #
-#zookeeper:    # image size: 450+M
-#   image: wurstmeister/zookeeper
-#   ports:
-#     - "2181:2181"
+#zookeeper:    # image size: 155+M
+#  image: jplock/zookeeper:3.4.8
+#  ports:
+#    - "2181:2181"
 #
-#kafka:    # image size: 470+M
-#   build: ./kafka
-#   ports:
-#     - "9092:9092"   # server port
-#     #- "9999:9999"   # jmx port
-#   links:
-#     - zookeeper:zk
-#   environment:
-#     - JMX_PORT=9999
-#     - KAFKA_ADVERTISED_HOST_NAME=10.128.17.30  # set to your docker host ip
-#   volumes:
-#     - /var/run/docker.sock:/var/run/docker.sock
+#kafka:    # image size: 215+M
+#  build: ./kafka
+#  ports:
+#    - "9092:9092"   # server port
+#    #- "9999:9999"   # jmx port
+#  links:
+#    - zookeeper:zk
+#  environment:
+#    - JMX_PORT=9999
+#    - KAFKA_ADVERTISED_HOST_NAME=10.128.17.30  # set to your docker host ip
+#  volumes:
+#    - /var/run/docker.sock:/var/run/docker.sock
 #
 #cassandra:    # image size: 370+M
 #  build: ./cassandra
@@ -128,11 +128,11 @@ tomcat:     #image size: 180+M
 #  environment:
 #    - LOCAL_JMX=no
 #
-#rabbitmq:     # image size: 300+M
-#  image: rabbitmq:3.5-management
+#rabbitmq:     # image size: 36M
+#  image: gonkulatorlabs/rabbitmq:3.6.0
 #  # If you need access from host, uncomment below section
-#  ports:
-#    - "15672:15672"   # management port
+#  # ports:
+#  #   - "15672:15672"   # management port
 #
 #mesos_master:    # image size: 330+M
 #  image: mesoscloud/mesos-master:0.24.1-centos-7
@@ -190,7 +190,7 @@ oneapm:
     - mysql
     - apache
     - tomcat
-    #- phpfpm
+    - phpfpm
     #- mcache
     #- postgres
     #- couchbase

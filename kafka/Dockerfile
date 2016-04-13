@@ -1,3 +1,3 @@
-FROM wurstmeister/kafka:0.8.2.1
+FROM wurstmeister/kafka:0.9.0.1
 
 EXPOSE 9999
