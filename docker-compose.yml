@@ -65,7 +65,7 @@ tomcat:     #image size: 180+M
 #  #  - "5432:5432"
 #
 #couchbase:    #image size: 370+M
-#  build: ./couchbase
+#  image: couchbase:4.0.0
 #  # you need to set passwd(already set in conf.d/couchbase.yaml) in the couchbase web page
 #  # If you need access from host, uncomment below section
 #  ports:
