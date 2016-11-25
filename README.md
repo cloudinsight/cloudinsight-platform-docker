@@ -1,4 +1,4 @@
-# OneAPM Cloud Insight supported dockerized service examples
+# Cloudinsight supported dockerized service examples
 
 This repository demostrate how to configure oneapm-ci-agent when using docker to run oneapm-ci-agent, and how to configure specific service in order to use oneapm-ci-agent.
 
