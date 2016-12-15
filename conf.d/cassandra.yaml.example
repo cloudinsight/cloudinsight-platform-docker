@@ -1,6 +1,7 @@
 instances:
   - host: cassandra
     port: 7199
+    cassandra_aliasing: true
     user: monitorRole  # this with jmx api perission readonly
     # user: controlRole  # with jmx api permission readwrite etc.
     password: cassandra
@@ -18,56 +19,96 @@ instances:
 
 init_config:
   # List of metrics to be collected by the integration
+  # Read http://docs.datadoghq.com/integrations/java/ to learn how to customize it
   conf:
     - include:
-        domain: org.apache.cassandra.db
+        domain: org.apache.cassandra.metrics
+        type: ClientRequest
+        scope:
+          - Read
+          - Write
+        name:
+          - Latency
+          - Timeouts
+          - Unavailables
         attribute:
+          - Count
+          - OneMinuteRate
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: ClientRequest
+        scope:
+          - Read
+          - Write
+        name:
+          - TotalLatency
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: Storage
+        name:
+          - Load
+          - Exceptions
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: ColumnFamily
+        bean_regex:
+          - .*keyspace=.*
+        name:
+          - TotalDiskSpaceUsed
           - BloomFilterDiskSpaceUsed
           - BloomFilterFalsePositives
           - BloomFilterFalseRatio
-          - Capacity
-          - CompletedTasks
           - CompressionRatio
-          - ExceptionCount
-          - Hits
-          - KeyCacheRecentHitRate
           - LiveDiskSpaceUsed
           - LiveSSTableCount
-          - Load
           - MaxRowSize
           - MeanRowSize
           - MemtableColumnsCount
-          - MemtableDataSize
+          - MemtableLiveDataSize
           - MemtableSwitchCount
           - MinRowSize
-          - PendingTasks
-          - RangeOperations
-          - ReadCount
-          - ReadOperations
-          - RecentHitRate
-          - RecentRangeLatencyMicros
-          - RecentReadLatencyMicros
-          - RecentWriteLatencyMicros
-          - Requests
-          - RowCacheRecentHitRate
-          - Size
-          - TotalDiskSpaceUsed
-          - TotalRangeLatencyMicros
-          - TotalReadLatencyMicros
-          - TotalWriteLatencyMicros
-          - UpdateInterval
-          - WriteCount
-          - WriteOperations
+          - ReadLatency
+          - WriteLatency
+        attribute:
+          - Value
+          - Count
+          - Mean
+          - 99thPercentile
+          - Max
       exclude:
-        keyspace: system
+        keyspace:
+          - OpsCenter
+          - system
+          - system_auth
+          - system_distributed
+          - system_schema
+          - system_traces
     - include:
-        domain: org.apache.cassandra.internal
+        domain: org.apache.cassandra.metrics
+        type: Cache
+        name:
+          - Capacity
+          - Size
         attribute:
-          - ActiveCount
+          - Value
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: Cache
+        name:
+          - Hits
+          - Requests
+        attribute:
+          - Count
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: ThreadPools
+        path: request
+        name:
+          - ActiveTasks
           - CompletedTasks
+          - PendingTasks
           - CurrentlyBlockedTasks
-          - TotalBlockedTasks
     - include:
-        domain: org.apache.cassandra.net
+        domain: org.apache.cassandra.db
         attribute:
-          - TotalTimeouts
+          - UpdateInterval

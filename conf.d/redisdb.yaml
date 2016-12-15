@@ -1,7 +1,7 @@
 init_config:
 
 instances:
-  - host: redis
+  - host: redis_master
     port: 6379
 
     # Can be used in lieu of host/port
@@ -38,3 +38,6 @@ instances:
     # set the value here.
     # Warning: It may impact the performance of your redis instance
     # slowlog-max-len: 128
+
+  - host: redis_slave
+    port: 6379
