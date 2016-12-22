@@ -136,6 +136,15 @@ tomcat:     #image size: 180+M
 #  environment:
 #    - LOCAL_JMX=no
 #
+#cassandra22:    # image size: 370+M
+#  build: ./cassandra22
+#  # If you need access from host, uncomment below section
+#  ports:
+#    - "7000:7000"   # server port
+#    #- "7199:7199"   # jmx port
+#  environment:
+#    - LOCAL_JMX=no
+#
 #rabbitmq:     # image size: 36M
 #  image: gonkulatorlabs/rabbitmq:3.6.0
 #  # If you need access from host, uncomment below section
@@ -184,6 +193,14 @@ tomcat:     #image size: 180+M
 #  ports:
 #    - "4730:4730"
 #
+#haproxy:     # image size: 12M
+#  build: ./haproxy
+#  # If you need access from host, uncomment below section
+#  ports:
+#    - "3836:3835"
+#  links:
+#    - nginx
+#
 #web:
 #  # demo redis service.
 #  build: ./web
@@ -230,8 +247,10 @@ oneapm:
     #- elasticsearch
     #- kafka
     #- cassandra
+    #- cassandra22
     #- rabbitmq
     #- zookeeper
     #- mesos_master
     #- mesos_slave
     #- gearmand
+    #- haproxy
