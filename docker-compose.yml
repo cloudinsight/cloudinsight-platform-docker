@@ -22,7 +22,8 @@ redis_master:   #image size: 15M
   #  - "6379:6379"
 
 redis_slave:   #image size: 15M
-  build: ./redis_slave
+  image: redis:3-alpine
+  command: redis-server --slaveof redis_master 6379
   # If you need access from host, uncomment below section
   #ports:
   #  - "6379:6379"
@@ -31,6 +32,7 @@ redis_slave:   #image size: 15M
 
 mongo:    #image size: 79M
   image: mvertes/alpine-mongo:3.0.6
+  command: mongod --smallfiles
   #environment:
   #  - MONGODB_PASS=myawsomemongopw
   # If you need access from host, uncomment below section
