@@ -67,7 +67,7 @@ tomcat:     #image size: 180+M
 #  #  - "11211:11211"
 #
 #postgres:    #image size: 27M
-#  build: ./postgres
+#  image: postgres:9.6-alpine
 #  environment:
 #    - POSTGRES_PASSWORD=myawsomepostgrespw
 #  # If you need access from host, uncomment below section
