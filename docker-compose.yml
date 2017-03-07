@@ -96,6 +96,12 @@ tomcat:     #image size: 180+M
 #  ports:
 #    - "8983:8983"   # solr port
 #    #- "18983:18983"   # jmx port
+#  volumes:
+#    - data:/opt/solr/server/solr/mycores
+#  entrypoint:
+#    - docker-entrypoint.sh
+#    - solr-precreate
+#    - mycore
 #
 #activemq:    #images size: 540+M
 #  build: ./activemq # set jmx options
