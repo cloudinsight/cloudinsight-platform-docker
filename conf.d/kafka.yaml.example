@@ -19,13 +19,13 @@ instances:
     # java_bin_path: /path/to/java # Optional, should be set if the agent cannot find your java executable
     # trust_store_path: /path/to/trustStore.jks # Optional, should be set if ssl is enabled
     # trust_store_password: password
-  - host: kafka
+  - host: kafka-producer
     port: 9998 # Producer
     tags:
       kafka: producer0
       # env: stage
       # newTag: test
-  - host: kafka
+  - host: kafka-consumer
     port: 9997 # Consumer
     tags:
       kafka: consumer0

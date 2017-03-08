@@ -132,8 +132,24 @@ tomcat:     #image size: 180+M
 #  environment:
 #    - JMX_PORT=9999
 #    - KAFKA_ADVERTISED_HOST_NAME=10.128.17.30  # set to your docker host ip
+#    - KAFKA_CREATE_TOPICS=test:1:1
 #  volumes:
 #    - /var/run/docker.sock:/var/run/docker.sock
+#
+#kafka-producer:
+#  build: ./kafka-producer
+#  links:
+#    - kafka
+#    - zookeeper:zk
+#  environment:
+#    - JMX_PORT=9998
+#
+#kafka-consumer:
+#  build: ./kafka-consumer
+#  links:
+#    - zookeeper:zk
+#  environment:
+#    - JMX_PORT=9997
 #
 #cassandra:    # image size: 370+M
 #  build: ./cassandra
@@ -254,6 +270,8 @@ oneapm:
     #- solr
     #- elasticsearch
     #- kafka
+    #- kafka-producer
+    #- kafka-consumer
     #- cassandra
     #- cassandra22
     #- rabbitmq
