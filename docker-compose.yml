@@ -132,6 +132,7 @@ tomcat:     #image size: 180+M
 #  environment:
 #    - JMX_PORT=9999
 #    - KAFKA_ADVERTISED_HOST_NAME=10.128.17.30  # set to your docker host ip
+#    - KAFKA_ZOOKEEPER_CONNECT=zk:2181
 #    - KAFKA_CREATE_TOPICS=test:1:1
 #  volumes:
 #    - /var/run/docker.sock:/var/run/docker.sock

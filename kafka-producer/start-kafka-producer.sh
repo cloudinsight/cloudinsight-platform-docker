@@ -11,4 +11,4 @@ if [  $JMX_PORT ]; then
 fi
 
 # Run Producer
-exec java $KAFKA_JMX_OPTS -cp *.jar com.bin.kafkaSend.SenderTest
+exec java $KAFKA_JMX_OPTS -cp target/*.jar com.bin.kafkaSend.SenderTest

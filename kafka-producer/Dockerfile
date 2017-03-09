@@ -1,16 +1,16 @@
-FROM debian:jessie
+FROM maven:3-jdk-8-alpine
 
 ADD sources.list /etc/apt/sources.list
 
-RUN apt-get update && \
-    apt-get install -y openjdk-7-jre-headless -qq --no-install-recommends && \
-    rm -rf /var/lib/apt/lists/*
+COPY settings.xml /usr/share/maven/ref/
 
-ADD . /kafka
+ADD kafkaTest /kafka
 WORKDIR /kafka
+
+RUN mvn clean compile assembly:single
 
 ADD start-kafka-producer.sh /usr/bin/start-kafka-producer.sh
 RUN chmod a+x /usr/bin/start-kafka-producer.sh
 
 # Run Producer
-CMD ["start-kafka-producer.sh"]
+ENTRYPOINT ["start-kafka-producer.sh"]
