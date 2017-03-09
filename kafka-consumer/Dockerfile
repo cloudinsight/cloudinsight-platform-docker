@@ -12,5 +12,7 @@ RUN mvn clean compile assembly:single
 ADD start-kafka-consumer.sh /usr/bin/start-kafka-consumer.sh
 RUN chmod a+x /usr/bin/start-kafka-consumer.sh
 
+EXPOSE 9997
+
 # Run Consumer
 ENTRYPOINT ["start-kafka-consumer.sh"]

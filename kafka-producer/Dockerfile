@@ -12,5 +12,7 @@ RUN mvn clean compile assembly:single
 ADD start-kafka-producer.sh /usr/bin/start-kafka-producer.sh
 RUN chmod a+x /usr/bin/start-kafka-producer.sh
 
+EXPOSE 9998
+
 # Run Producer
 ENTRYPOINT ["start-kafka-producer.sh"]
