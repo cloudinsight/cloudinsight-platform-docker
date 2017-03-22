@@ -235,7 +235,7 @@ tomcat:     #image size: 180+M
 #    - "5001:5000"
 
 oneapm:
-  build: ./oneapm
+  image: oneapm/docker-oneapm-ci-agent:java
   hostname: $HOSTNAME
   environment:
     #- CI_URL=default_OneAPM_ci_collector
